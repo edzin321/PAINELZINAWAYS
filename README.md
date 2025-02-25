@@ -612,7 +612,7 @@ Frame.Draggable = true
 Title.Size = UDim2.new(1, 0, 0, 30)
 Title.Position = UDim2.new(0, 0, 0, 0)
 Title.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Title.Text = "MMD ON TOP"
+Title.Text = "NINJA NO TOPO"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.Font = Enum.Font.SourceSansBold
 Title.TextSize = 18
@@ -655,7 +655,7 @@ local Paragraph = rev:CreateParagraph({Title = "Como usar?", Content = "Ensinamo
 
 
 local otoTab = Window:CreateTab("Outros")
-local Paragraph = otoTab:CreateParagraph({Title = "MMD ON TOP", Content = "feito por carplacer & equipe MMD"})
+local Paragraph = otoTab:CreateParagraph({Title = "NINJA NO TOPO", Content = "feito por carplacer & equipe MMD"})
 local Toggle = otoTab:CreateToggle({
     Name = "anti staff V2",
     CurrentValue = false,
@@ -724,88 +724,6 @@ task.spawn(function()
         task.wait(5)
     end
 end)
-
-
-local Butkton = otoTab:CreateButton({
-   Name = "farm planta UI",
-   Callback = function()
-   -- Criando a UI
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
-local ToggleButton = Instance.new("TextButton")
-ToggleButton.Parent = ScreenGui
-ToggleButton.Size = UDim2.new(0, 200, 0, 50)
-ToggleButton.Position = UDim2.new(0.5, -100, 0.1, 0)
-ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToggleButton.Font = Enum.Font.SourceSansBold
-ToggleButton.TextSize = 20
-ToggleButton.Text = "Ativar Farm"
-
-local farming = false  -- Variável para controlar o farm
-
--- Função para teletransportar para um "Stem" aleatório
-local function teleportarJogadorAleatoriamente()
-    local stems = {}
-
-    for _, plantaIlegal in pairs(game.Workspace:GetDescendants()) do
-        if plantaIlegal.Name == "PlantaIlegal" then
-            local stem = plantaIlegal:FindFirstChild("Stem")
-            if stem then
-                table.insert(stems, stem)
-            end
-        end
-    end
-
-    if #stems > 0 then
-        local stemAleatorio = stems[math.random(1, #stems)]
-        if stemAleatorio and game.Players.LocalPlayer.Character then
-            local humanoide = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-            if humanoide then
-                humanoide.CFrame = stemAleatorio.CFrame
-            end
-        end
-    else
-        warn("Nenhum 'Stem' encontrado.")
-    end
-end
-
--- Simula a tecla "E" para interagir
-local function segurarTeclaE()
-    local virtualInputManager = game:GetService("VirtualInputManager")
-    local interactionKey = "E"
-    
-    for _ = 1, 17 do  -- Mantém pressionado por 17 segundos
-        virtualInputManager:SendKeyEvent(true, interactionKey, false, game)
-        wait(1)
-    end
-
-    virtualInputManager:SendKeyEvent(false, interactionKey, false, game)
-end
-
--- Loop do farm
-local function farmLoop()
-    while farming do
-        teleportarJogadorAleatoriamente()
-        segurarTeclaE()
-        wait(1)
-    end
-end
-
--- Alternar o farm ao clicar no botão
-ToggleButton.MouseButton1Click:Connect(function()
-    farming = not farming  -- Inverte o estado do farm
-
-    if farming then
-        ToggleButton.Text = "Desativar Farm"
-        farmLoop()
-    else
-        ToggleButton.Text = "Ativar Farm"
-    end
-end)
-   end,
-})
 
 local Section = otoTab:CreateSection("AUTO CL CONFIG")
 -- Verifica se getgenv está disponível
@@ -894,4 +812,85 @@ AutoFarmTab:CreateButton({
         -- Executa o loadstring para ativar o script de Auto Farm
         loadstring(game:HttpGet("https://raw.githubusercontent.com/offbernardo/Mini-City/refs/heads/main/Gari"))()
     end,
+})
+
+local Butkton = otoTab:CreateButton({
+   Name = "farm planta UI",
+   Callback = function()
+   -- Criando a UI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local ToggleButton = Instance.new("TextButton")
+ToggleButton.Parent = ScreenGui
+ToggleButton.Size = UDim2.new(0, 200, 0, 50)
+ToggleButton.Position = UDim2.new(0.5, -100, 0.1, 0)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.TextSize = 20
+ToggleButton.Text = "Ativar Farm"
+
+local farming = false  -- Variável para controlar o farm
+
+-- Função para teletransportar para um "Stem" aleatório
+local function teleportarJogadorAleatoriamente()
+    local stems = {}
+
+    for _, plantaIlegal in pairs(game.Workspace:GetDescendants()) do
+        if plantaIlegal.Name == "PlantaIlegal" then
+            local stem = plantaIlegal:FindFirstChild("Stem")
+            if stem then
+                table.insert(stems, stem)
+            end
+        end
+    end
+
+    if #stems > 0 then
+        local stemAleatorio = stems[math.random(1, #stems)]
+        if stemAleatorio and game.Players.LocalPlayer.Character then
+            local humanoide = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if humanoide then
+                humanoide.CFrame = stemAleatorio.CFrame
+            end
+        end
+    else
+        warn("Nenhum 'Stem' encontrado.")
+    end
+end
+
+-- Simula a tecla "E" para interagir
+local function segurarTeclaE()
+    local virtualInputManager = game:GetService("VirtualInputManager")
+    local interactionKey = "E"
+    
+    for _ = 1, 17 do  -- Mantém pressionado por 17 segundos
+        virtualInputManager:SendKeyEvent(true, interactionKey, false, game)
+        wait(1)
+    end
+
+    virtualInputManager:SendKeyEvent(false, interactionKey, false, game)
+end
+
+-- Loop do farm
+local function farmLoop()
+    while farming do
+        teleportarJogadorAleatoriamente()
+        segurarTeclaE()
+        wait(1)
+    end
+end
+
+-- Alternar o farm ao clicar no botão
+ToggleButton.MouseButton1Click:Connect(function()
+    farming = not farming  -- Inverte o estado do farm
+
+    if farming then
+        ToggleButton.Text = "Desativar Farm"
+        farmLoop()
+    else
+        ToggleButton.Text = "Ativar Farm"
+    end
+end)
+   end,
 })
