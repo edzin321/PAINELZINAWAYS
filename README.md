@@ -725,95 +725,6 @@ task.spawn(function()
     end
 end)
 
-local Section = otoTab:CreateSection("AUTO CL CONFIG")
--- Verifica se getgenv está disponível
-if getgenv == nil then
-    error("getgenv não está definido neste ambiente.")
-end
-
--- Configuração inicial do getgenv
-getgenv().KickOnLowHealth = false -- Ativar/desativar o auto kick
-getgenv().HealthThreshold = 10    -- Vida mínima antes de ser expulso
-
--- Função para monitorar a vida do jogador
-local function monitorHealth()
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    if character and character:FindFirstChild("Humanoid") then
-        local humanoid = character.Humanoid
-        humanoid.HealthChanged:Connect(function(health)
-            if health <= getgenv().HealthThreshold and getgenv().KickOnLowHealth then
-                player:Kick("Auto cl pq tua vida tava abaixo de " .. getgenv().HealthThreshold)
-            end
-        end)
-    end
-end
-
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    monitorHealth()
-end)
-
-if game.Players.LocalPlayer.Character then
-    monitorHealth()
-end
-
--- Criação do Toggle para ativar/desativar o auto kick
-local Toggle = otoTab:CreateToggle({
-   Name = "auto CL",
-   CurrentValue = getgenv().KickOnLowHealth,
-   Flag = "AutoKickToggle",
-   Callback = function(Value)
-       getgenv().KickOnLowHealth = Value
-   end,
-})
-
--- Criação do Slider para ajustar o limite de vida
-local Slider = otoTab:CreateSlider({
-   Name = "kick quando vida =",
-   Range = {0, 100},
-   Increment = 1,
-   Suffix = " HP",
-   CurrentValue = getgenv().HealthThreshold,
-   Flag = "HealthThresholdSlider",
-   Callback = function(Value)
-       getgenv().HealthThreshold = Value
-   end,
-})
-
-getgenv().Key = Enum.KeyCode.E
-getgenv().Enabled = getgenv().Enabled or false
-local UserInputService = game:GetService("UserInputService")
-
--- Configurações via getgenv
-getgenv().Key = getgenv().Key or Enum.KeyCode.R -- Tecla padrão: R
-getgenv().Enabled = getgenv().Enabled or false -- Estado inicial: desativado
-
--- Função para enviar a mensagem /revistar
-local function sendRevistarMessage()
-    local TextChatService = game:GetService("TextChatService")
-    local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
-    channel:SendAsync("/revistar morto")
-end
-
--- Listener para detectar teclas pressionadas
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    -- Verifica se o script está ativado e se a tecla correta foi pressionada
-    if getgenv().Enabled and input.KeyCode == getgenv().Key and not gameProcessed then
-        sendRevistarMessage()
-    end
-end)
-
-local AutoFarmTab = Window:CreateTab("Auto Farm")
-
-
-AutoFarmTab:CreateButton({
-    Name = "Auto Farm Gari",
-    Callback = function()
-        -- Executa o loadstring para ativar o script de Auto Farm
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/offbernardo/Mini-City/refs/heads/main/Gari"))()
-    end,
-})
-
 local Butkton = otoTab:CreateButton({
    Name = "farm planta UI",
    Callback = function()
@@ -894,3 +805,81 @@ ToggleButton.MouseButton1Click:Connect(function()
 end)
    end,
 })
+
+local Section = otoTab:CreateSection("AUTO CL CONFIG")
+-- Verifica se getgenv está disponível
+if getgenv == nil then
+    error("getgenv não está definido neste ambiente.")
+end
+
+-- Configuração inicial do getgenv
+getgenv().KickOnLowHealth = false -- Ativar/desativar o auto kick
+getgenv().HealthThreshold = 10    -- Vida mínima antes de ser expulso
+
+-- Função para monitorar a vida do jogador
+local function monitorHealth()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    if character and character:FindFirstChild("Humanoid") then
+        local humanoid = character.Humanoid
+        humanoid.HealthChanged:Connect(function(health)
+            if health <= getgenv().HealthThreshold and getgenv().KickOnLowHealth then
+                player:Kick("Auto cl pq tua vida tava abaixo de " .. getgenv().HealthThreshold)
+            end
+        end)
+    end
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    monitorHealth()
+end)
+
+if game.Players.LocalPlayer.Character then
+    monitorHealth()
+end
+
+-- Criação do Toggle para ativar/desativar o auto kick
+local Toggle = otoTab:CreateToggle({
+   Name = "auto CL",
+   CurrentValue = getgenv().KickOnLowHealth,
+   Flag = "AutoKickToggle",
+   Callback = function(Value)
+       getgenv().KickOnLowHealth = Value
+   end,
+})
+
+-- Criação do Slider para ajustar o limite de vida
+local Slider = otoTab:CreateSlider({
+   Name = "kick quando vida =",
+   Range = {0, 100},
+   Increment = 1,
+   Suffix = " HP",
+   CurrentValue = getgenv().HealthThreshold,
+   Flag = "HealthThresholdSlider",
+   Callback = function(Value)
+       getgenv().HealthThreshold = Value
+   end,
+})
+
+getgenv().Key = Enum.KeyCode.E
+getgenv().Enabled = getgenv().Enabled or false
+local UserInputService = game:GetService("UserInputService")
+
+-- Configurações via getgenv
+getgenv().Key = getgenv().Key or Enum.KeyCode.R -- Tecla padrão: R
+getgenv().Enabled = getgenv().Enabled or false -- Estado inicial: desativado
+
+-- Função para enviar a mensagem /revistar
+local function sendRevistarMessage()
+    local TextChatService = game:GetService("TextChatService")
+    local channel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+    channel:SendAsync("/revistar morto")
+end
+
+-- Listener para detectar teclas pressionadas
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    -- Verifica se o script está ativado e se a tecla correta foi pressionada
+    if getgenv().Enabled and input.KeyCode == getgenv().Key and not gameProcessed then
+        sendRevistarMessage()
+    end
+end)
