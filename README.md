@@ -884,3 +884,14 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         sendRevistarMessage()
     end
 end)
+
+local AutoFarmTab = Window:CreateTab("Auto Farm")
+
+
+AutoFarmTab:CreateButton({
+    Name = "Auto Farm Gari",
+    Callback = function()
+        -- Executa o loadstring para ativar o script de Auto Farm
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/offbernardo/Mini-City/refs/heads/main/Gari"))()
+    end,
+})
